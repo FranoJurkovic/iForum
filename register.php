@@ -34,7 +34,7 @@
 
                 //Ako je e-mail isti provjerava dali su drugi uvjeti isti ako jesu postoji korisniku vraća grešku
                 else {
-                    $errors = "Korisnik već postoji";
+                    $errors = "Lozinka nije ispravna";
                 }
             }
 

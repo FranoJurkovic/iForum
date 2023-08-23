@@ -67,8 +67,6 @@ body{
     font-size: 16px;
     resize: none;
 }
-
-/* Added styles for the header elements */
 .header {
     display: flex;
     justify-content: space-between;

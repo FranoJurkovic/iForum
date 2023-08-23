@@ -21,7 +21,7 @@
             $data = mysqli_fetch_assoc($query);
 
             //Ako username nema u bazi ispisuje da nema korisnika
-            if (is_null($data["username"])) {
+            if (is_null($data)) {
                 $errors = "Korisničko ime nepostoji!";
             }
 
