@@ -1,73 +1,60 @@
 <?php
-    $errors = "";
+$errors = "";
 
-    //Provjera dali se zahtjev preko POST-a ako je povezuje se s bazom
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $conn = mysqli_connect("localhost", "root", "", "forum");
+// Provjera da li je zahtjev poslan preko POST metode
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $conn = mysqli_connect("localhost", "root", "", "forum");
 
-        //Varijable imaju htmlspecialchars jer ako korinsik upiše bilo koji html element da
-        //web stranica tretira te podatke kao običan string
-        $username = htmlspecialchars($_POST["username"]);
-        $password = htmlspecialchars($_POST["password"]);
+    // Varijable imaju htmlspecialchars kako bi se spriječio XSS napad
+    $username = htmlspecialchars($_POST["username"]);
+    $password = htmlspecialchars($_POST["password"]);
 
-        //Ako korisnik nije upisao ništa samo pritisnuo pošalji ispisat će mu neispravan unos
-        if (empty($username) || empty($password)) {
-            $errors = "Neispravan unos!";
-        }
+    if (empty($username) || empty($password)) {
+        $errors = "Neispravan unos!";
+    } else {
+        $query = mysqli_query($conn, "SELECT username, password, role FROM register WHERE username='$username';");
+        $data = mysqli_fetch_assoc($query);
 
-        //Ako je ispravan unos podaci se uzimaju u asocijativni niz
-        else {
-            $query = mysqli_query($conn, "SELECT username, password FROM register WHERE username='$username';");
-            $data = mysqli_fetch_assoc($query);
+        if (is_null($data)) {
+            $errors = "Korisničko ime ne postoji!";
+        } else {
+            if (password_verify($password, $data["password"])) {
+                // Postavljanje korisničkog imena u sesiju
+                session_start();
+                $_SESSION["username"] = $username;
+                
+                // Postavljanje uloge korisnika u sesiju
+                $_SESSION["role"] = $data["role"];
 
-            //Ako username nema u bazi ispisuje da nema korisnika
-            if (is_null($data)) {
-                $errors = "Korisničko ime nepostoji!";
-            }
-
-            //Provjera jeli ispravna šifra to jest dali se podudara sa šifrom iz baze podataka
-            else {
-
-                //Ako je šifra ispravna korisnik ide do forum.php stranice
-                if (password_verify($password, $data["password"])) {
-                    session_start();
-                    $_SESSION["username"]=$username;
-                    header("Location: forum.php");
-                }
-
-                //Lozinka nije dobra pa se korisnik nije mogao prijaviti
-                else {
-                    $errors = "Lozinka nije ispravna";
-                }
+                header("Location: forum.php");
+            } else {
+                $errors = "Lozinka nije ispravna";
             }
         }
     }
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="hr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>iForum</title>
-    <!--Povezivanje s css-om-->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <h1>Prijava</h1>
 
-    <!--Ukoliko postoji greška ispisat će se u paragrafu-->
-    <p style="color:red"><?php echo $errors; ?></p>
+    <p style="color: red;"><?php echo $errors; ?></p>
 
-    <!--Unutar forme ispisivanje se radi s htmlspecialchars zbog sigurnosti 
-    ako netko pokuša pisati html elemente da se tretiraju kao običan string-->
-    <form action=<?php echo htmlspecialchars($_SERVER['PHP_SELF'])?> method="POST">
-        <input type="text" name="username" placeholder="Korisničko ime" class="prijava_i"> <br>
-        <input type="password" name="password" placeholder="Lozinka" class="prijava_i"> <br><br>
+    <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST">
+        <input type="text" name="username" placeholder="Unesite korisničko ime" class="prijava_i"><br>
+        <input type="password" name="password" placeholder="Unesite lozinku" class="prijava_i"><br><br>
         <input type="submit" value="Prijava" class="pri_tipka">
     </form>
     <br>
 
-    <!--Ukoliko korisnik nema račun da se može registrirati preko poveznice-->
     <a href="register.php" class="pri_a">Registracija</a>
 </body>
 </html>

@@ -1,54 +1,89 @@
 <?php
-    // Provjera da li korisničko ime postoji (provjera prijave), inače preusmjeri na login.php
-    session_start();
-    if (is_null($_SESSION["username"])) {
-        header("Location: login.php");
-    }
+session_start();
 
-    // Povezivanje s bazom podataka
-    $conn = mysqli_connect("localhost", "root", "", "forum");
+// Povezivanje s bazom podataka
+$conn = mysqli_connect("localhost", "root", "", "forum");
 
-    // Dohvaćanje naslova iz URL-a
-    $title = $_GET["title"];
+// Provjera je li korisničko ime postoji (provjera prijave), inače preusmjeri na login.php
+if (is_null($_SESSION["username"])) {
+    header("Location: login.php");
+    exit();
+}
 
-    // Preusmjeravanje na forum.php ako naslov nije naveden u URL-u
-    if (is_null($title)) {
+// Dohvati naslov iz URL-a
+$title = $_GET["title"];
+
+// Preusmjeravanje na forum.php ako naslov nije naveden u URL-u
+if (is_null($title)) {
+    header("Location: forum.php");
+    exit();
+}
+
+// Dohvati podatke o objavi
+$query = mysqli_query($conn, "SELECT poster, title, post_desc FROM posting WHERE title='$title';");
+$data = mysqli_fetch_assoc($query);
+
+// Preusmjeravanje na forum.php ako naslov ne postoji u bazi
+if (is_null($data["title"])) {
+    header("Location: forum.php");
+    exit();
+}
+
+// Provjeri je li trenutni korisnik autor objave
+$isAuthor = ($_SESSION["username"] == $data["poster"]);
+
+// Provjeri je li trenutni korisnik admin
+$isAdmin = ($_SESSION["role"] == "admin");
+
+// Provjeri je li korisnik poslao zahtjev za uređivanjem objave
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["edit_post"])) {
+    // Preusmjeri korisnika na stranicu za uređivanje objave
+    header("Location: edit_post.php?title=" . $data["title"]);
+    exit();
+}
+
+// Provjeri je li korisnik poslao zahtjev za brisanjem objave
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["delete_post"])) {
+    // Samo autor ili admin mogu izbrisati objavu
+    if ($isAuthor || $isAdmin) {
+        mysqli_query($conn, "DELETE FROM posting WHERE title='$title';");
+        // Nakon brisanja, preusmjeri korisnika na forum.php
         header("Location: forum.php");
+        exit();
     }
+}
 
-    // Dohvaćanje podataka o objavi
-    $query = mysqli_query($conn, "SELECT poster, title, post_desc FROM posting WHERE title='$title';");
-    $data = mysqli_fetch_assoc($query);
+// Provjeri je li korisnik poslao komentar
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["comment"])) {
+    // Dohvati korisničko ime iz sesije
+    $poster = $_SESSION["username"];
 
-    // Preusmjeravanje na forum.php ako naslov ne postoji u bazi
-    if (is_null($data["title"])) {
-        header("Location: forum.php");
-    }
+    // Dohvati komentar iz POST podataka
+    $comment = $_POST["comment"];
 
-    // Provjera je li korisnik poslao komentar
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        // Dohvati korisničko ime iz sesije
-        $poster = $_SESSION["username"];
-
-        // Dohvati komentar iz POST podataka
-        $comment = $_POST["comment"];
-
+    // Provjeri je li komentar prazan
+    if (!empty($comment)) {
         // Dodaj komentar u bazu podataka
         $comment = mysqli_real_escape_string($conn, $comment); // Zaštita od SQL injection
         $insert_query = "INSERT INTO comments (title, poster, comment) VALUES ('$title', '$poster', '$comment')";
         mysqli_query($conn, $insert_query);
+    } else {
+        // Ako je komentar prazan, ispiši poruku
+        $comment_error = "Unos nije ispravan. Molimo unesite komentar.";
     }
+}
 
-    // Dohvati sve komentare za ovu objavu
-    $comments_query = mysqli_query($conn, "SELECT poster, comment, created_at FROM comments WHERE title='$title' ORDER BY created_at DESC;");
+// Dohvati sve komentare za ovu objavu
+$comments_query = mysqli_query($conn, "SELECT id, poster, comment, created_at FROM comments WHERE title='$title' ORDER BY created_at DESC;");
 ?>
+
 <!DOCTYPE html>
 <html lang="hr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $data["title"]; ?></title>
-    <!--Povezivanje s css-om-->
+    <!-- Povezivanje s CSS-om -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -56,26 +91,49 @@
 
     <h1><?php echo $data["title"]; ?></h1>
     <sup class="show_sup">Kreirao: <?php echo $data["poster"]; ?></sup><br><hr>
-    <p class="show_p"><?php echo $data["post_desc"]; ?></p><br><br>
+    <p class="show_p"><?php echo $data["post_desc"]; ?></p>
+
+    <!-- Gumb za uređivanje objave (samo autor ili admin) -->
+    <?php
+    if ($isAuthor || $isAdmin) {
+        echo '<form method="post" action="">';
+        echo '<input type="submit" name="edit_post" value="Uredi posting" class="show_a">';
+        echo '</form>';
+    }
+    ?>
+
+    <!-- Gumb za brisanje objave (samo autor ili admin) -->
+    <?php
+    if ($isAuthor || $isAdmin) {
+        echo '<form method="post" action="">';
+        echo '<input type="submit" name="delete_post" value="Obriši posting" class="show_a" style="color: red;">';
+        echo '</form>';
+    }
+    ?><br><br>
     <!-- Dodavanje komentara -->
     <form method="post" action="">
         <textarea name="comment" placeholder="Unesite komentar" rows="4" cols="50" class="show_area"></textarea><br>
+        <?php
+        if (isset($comment_error)) {
+            echo '<p class="error-message">' . $comment_error . '</p>';
+        }
+        ?>
         <input type="submit" value="Dodaj komentar" class="show_a">
     </form><br>
+
     <!-- Ispis postojećih komentara -->
     <?php
-        while ($comment_data = mysqli_fetch_assoc($comments_query)) {
-            echo "<p class='comment'><b>" . $comment_data["poster"] . ":</b> " . $comment_data["comment"] . "</p>";
-            echo "<p class='comment-time'>" . formatCommentTime($comment_data["created_at"]) . "</p><hr>";
+    while ($comment_data = mysqli_fetch_assoc($comments_query)) {
+        echo "<div class='comment'>";
+        echo "<b>" . $comment_data["poster"] . ":</b> " . $comment_data["comment"];
+
+        // Gumb za brisanje komentara (samo autor komentara ili admin)
+        if ($_SESSION["username"] == $comment_data["poster"] || $isAdmin) {
+            echo '<br><br><a href="delete_comment.php?id=' . $comment_data["id"] . '" class="show_a" style="color: red;"><i style="font-size:16px" </i> Obriši komentar</a>';
         }
+
+        echo "</div><br><br>";
+    }
     ?>
 </body>
 </html>
-
-<?php
-    // Funkcija za formatiranje vremena komentara
-    function formatCommentTime($timestamp) {
-        // Pretvori vremenski znak u ljudski čitljiv format
-        return "Kreirano: " . date("d.m.Y H:i:s", strtotime($timestamp));
-    }
-?>

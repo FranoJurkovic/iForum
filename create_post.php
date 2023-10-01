@@ -61,6 +61,8 @@
     <title>iForum</title>
     <!--Povezivanje s css-om-->
     <link rel="stylesheet" href="style.css">
+    <!--Angular-->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
 </head>
 <body>
 
@@ -74,9 +76,12 @@
     <!--Unutar forme ispisivanje se radi s htmlspecialchars zbog sigurnosti 
     ako netko pokuša pisati html elemente da se tretiraju kao običan string-->
     <form action=<?php echo htmlspecialchars($_SERVER['PHP_SELF'])?> method="POST">
-        <input type="text" name="title" placeholder="Naslov" class="cre_i"> <br><br>
-        <textarea name="desc" rows="25" cols="50" placeholder="Sadržaj teme.." class="cre_area"></textarea><br><br>
-        <input type="submit" class="cre_tipka">
+        <div ng-app="">
+            <input type="text" name="title" placeholder="Naslov" class="cre_i" ng-model="name"> <br>
+            <p style="color:white;">{{name}}</p>
+            <textarea name="desc" rows="4" cols="50" placeholder="Sadržaj teme.." class="cre_area"></textarea><br><br>
+            <input type="submit" class="cre_tipka">
+        </div>
     </form>
 </body>
 </html>

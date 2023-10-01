@@ -1,32 +1,38 @@
 <?php
-    session_start();
+session_start();
 
-    // Varijable za povezivanje s bazom podataka
-    $db_host = "localhost";
-    $db_user = "root";
-    $db_pass = "";
-    $db_name = "forum";
+// Varijable za povezivanje s bazom podataka
+$db_host = "localhost";
+$db_user = "root";
+$db_pass = "";
+$db_name = "forum";
 
-    // Uspostavljanje veze s bazom podataka
-    $conn = mysqli_connect($db_host, $db_user, $db_pass, $db_name);
+// Uspostavljanje veze s bazom podataka
+$conn = mysqli_connect($db_host, $db_user, $db_pass, $db_name);
 
-    // Provjerava dali baza podataka ima grešaka
-    if (!$conn) {
-        die("Database connection failed: " . mysqli_connect_error());
-    }
+// Provjerava dali baza podataka ima grešaka
+if (!$conn) {
+    die("Database connection failed: " . mysqli_connect_error());
+}
 
-    // Provjerava jeli korisnik prijavljen ako nije odvodi ga do login.php
-    if (is_null($_SESSION["username"])) {
-        header("Location: login.php");
-        exit();
-    }
+// Provjerava jeli korisnik prijavljen ako nije odvodi ga do login.php
+if (is_null($_SESSION["username"])) {
+    header("Location: login.php");
+    exit();
+}
 
-    // Ako korisnik klikne na odjavu kod gasi sesiju
-    if (isset($_POST['logout'])) {
-        session_destroy();
-        header("Location: login.php");
-        exit();
-    }
+// Ako korisnik klikne na odjavu kod gasi sesiju
+if (isset($_POST['logout'])) {
+    session_destroy();
+    header("Location: login.php");
+    exit();
+}
+
+// Funkcija za provjeru korisničke uloge
+function isAdmin() {
+    return isset($_SESSION["role"]) && $_SESSION["role"] === "admin";
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -47,53 +53,38 @@
         <!--Preko sesije dohvaća korisnika i ispisuje ga-->
         <p>Pozdrav <b><?php echo $_SESSION["username"] ?></b> !</p>
         <a class="for_a" href="create_post.php">Kreiraj novu objavu</a>
-        <form method="get" action="">
-            <label for="searchTitle">Pretraži naslove:</label>
-            <input type="text" id="searchTitle" name="searchTitle" class="for_i" >
-            <button type="submit" class="for_b"><i class="fa fa-search"></i></button>
-        </form>
+        <a class="for_a" href="search.php">Pretraživanje</a>
         <form method="post" action="">
-            <input class="for_a" type="submit" name="logout" value="Odjava" class="header-link header-logout-button">
+            <input class="for_a" type="submit" name="logout" value="Odjava">
         </form>
     </div>
     <br>
     <hr>
+    <br>
 
     <?php
-        // Provjerava dali su uvjeti kod pretrage točni
-        if (isset($_GET['searchTitle'])) {
-            $searchTitle = $_GET['searchTitle'];
-            $searchTitle = mysqli_real_escape_string($conn, $searchTitle);
+        // Prikazuje sve objave
+        $query = mysqli_query($conn, "SELECT title, poster, post_desc FROM posting");
 
-            // Vraća rezutlate s podudaranim nazivom naslova
-            $query = mysqli_query($conn, "SELECT title, poster FROM posting WHERE title LIKE '%$searchTitle%'");
+        // Provjerava greške u čitanju koda
+        if (!$query) {
+            die("Query execution failed: " . mysqli_error($conn));
+        }
 
-            // Provjerava greške u čitanju koda
-            if (!$query) {
-                die("Query execution failed: " . mysqli_error($conn));
-            }
+        // Prikazuje se rezultate
+        while ($data = mysqli_fetch_assoc($query)) {
+            echo "<br><br><a class='for_a' href='show_content.php?title="
+            . htmlspecialchars($data['title']) . "'>"
+            . htmlspecialchars($data["title"]) . "</a>" . " <br><br><sub style='color:white;'><b>Kreirao: "
+            . htmlspecialchars($data["poster"]) . "</sub></b><br><br>"
+            . "<span style='color:white;'>" . htmlspecialchars($data["post_desc"]) . "</span><br><br>";
 
-            // Prikazuje filtrirane objave
-            while ($data = mysqli_fetch_assoc($query)) {
-                echo "<a class='for_a' href='show_content.php?title=".$data['title']."'>".$data["title"]."</a>"." <br><br><sub><b>Kreirao ".$data["poster"]."</sub><b><hr><br>";
-            }
-
-            // Ako rezultat za pretragu nema izbaci poruku
-            if (mysqli_num_rows($query) === 0) {
-                echo "<p class='for_p'>Nema rezultata za pretragu po naslovu: <b>$searchTitle</b></p><br>";
-            }
-        } else {
-            // Prikazuje sve objave
-            $query = mysqli_query($conn, "SELECT title, poster FROM posting");
-
-            // Provjerava greške u čitanju koda
-            if (!$query) {
-                die("Query execution failed: " . mysqli_error($conn));
-            }
-
-            // Prikazuje se rezultate
-            while ($data = mysqli_fetch_assoc($query)) {
-                echo "<a class='for_a' href='show_content.php?title=".$data['title']."'>".$data["title"]."</a>"." <br><br><sub><b>Kreirao ".$data["poster"]."</sub><b><hr><br>";
+            // Dodaj opciju za brisanje posta ako je korisnik admin
+            if (isAdmin()) {
+                echo '<form method="post" action="delete_post.php">';
+                echo '<input type="hidden" name="title" value="' . htmlspecialchars($data['title']) . '">';
+                echo '<input type="submit" name="delete_post" value="Obriši post" class="for_a" style="color: red;">';
+                echo '</form><br><br>';
             }
         }
 

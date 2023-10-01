@@ -1,62 +1,98 @@
-body{
+/* Globalni stilovi */
+body {
     text-align: center;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     padding: 10px;
     margin: 10px;
-    background-color: aquamarine;
+    background-color: rgb(82, 63, 207);
 }
-.reg_tipka,.reg_a,.pri_tipka,.pri_a{
+
+/* Stilovi za header */
+.header {
+    display: flex;
+    flex-wrap: wrap; /* Omogućava prelazak na novi red kada nema dovoljno prostora */
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgb(82, 63, 207);
+}
+
+.header p {
+    background-color: gray;
+    padding: 8px 40px;
+    margin: 8px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    text-decoration: none;
+    color: white;
+}
+
+.header p:hover {
+    background-color: gray; /* Dodajte istu boju kao i za tipku "Početna" */
+    color: white;
+}
+
+/* Stilovi za tipke i input */
+.reg_tipka, .reg_a, .pri_tipka, .pri_a {
     background-color: gray;
     padding: 8px 20px;
-    margin: 8px 0px;
+    margin: 8px;
     border: 1px solid #ccc;
     border-radius: 8px;
     color: white;
     font-size: 16px;
-    width: 40%;
+    flex: 1; /* Omogućava ravnomjerno raspoređivanje prostora */
 }
-.reg_a,.pri_a{
+
+.reg_a, .pri_a {
     text-decoration: none;
 }
-.reg_i,.prijava_i,.cre_i{
-    width: 40%;
+
+.reg_i, .prijava_i, .cre_i {
     padding: 12px 20px;
-    margin: 8px 0;
+    margin: 8px;
     display: inline-block;
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
+    font-size: 16px;
+    flex: 1; /* Omogućava ravnomjerno raspoređivanje prostora */
 }
-.for_p{
+
+.for_p {
     background-color: gray;
     padding: 8px 20px;
-    margin: 8px 0px;
+    margin: 8px;
     border: 1px solid #ccc;
     border-radius: 8px;
     color: white;
     font-size: 16px;
 }
-.for_a,.cre_a,.show_a,.show_p,.show_sup{
+
+.for_a, .cre_a, .show_a, .show_p, .show_sup {
     background-color: white;
     padding: 8px 40px;
-    margin: 8px 0px;
+    margin: 8px;
     border: 1px solid #ccc;
     border-radius: 8px;
     color: grey;
     font-size: 16px;
     text-decoration: none;
+    flex: 1; /* Omogućava ravnomjerno raspoređivanje prostora */
 }
-.for_tipka,.cre_tipka{
+
+.for_tipka, .cre_tipka {
     background-color: gray;
     padding: 8px 20px;
-    margin: 8px 0px;
+    margin: 8px;
     border: 1px solid #ccc;
     border-radius: 8px;
     color: white;
     font-size: 16px;
-    width: 20%;
+    width: auto; /* Postavite širinu na "auto" kako bi se prilagodila sadržaju */
 }
-.cre_area,.show_area{
+
+.cre_area, .show_area {
     width: 70%;
     height: 150px;
     padding: 12px 20px;
@@ -67,19 +103,15 @@ body{
     font-size: 16px;
     resize: none;
 }
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: aquamarine;
-}
-.for_i{
+
+.for_i {
     text-decoration: none;
     border: 1px solid #ccc;
     border-radius: 4px;
     height: 24px;
 }
-.for_b{
+
+.for_b {
     background-color: gray;
     border: 1px solid #ccc;
     border-radius: 8px;
