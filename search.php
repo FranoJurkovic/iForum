@@ -62,11 +62,11 @@ if (isset($_GET['searchTitle'])) {
     <h1>Pretraživanje naslova</h1>
 
     <form method="get" action="">
-        <div ng-app="">
+        <div ng-app="myApp" ng-controller="myCtrl">
             <label for="searchTitle">Unesite naslov za pretragu:</label>
-            <input type="text" id="searchTitle" name="searchTitle" class="for_i" ng-model="name">
+            <input type="text" id="searchTitle" name="searchTitle" class="for_i" ng-model="unos_teksta" ng-keyup="prikazi_poruku()">
             <button type="submit" class="for_b">Pretraži</button>
-            <p style="color:white;">{{name}}</p>
+            <p style="color:white;" ng-show="prikazi_input_unos">Unijeli ste: {{unos_teksta}}</p>
         </div>
     </form>
     <br>
@@ -85,6 +85,20 @@ if (isset($_GET['searchTitle'])) {
             echo "<p class='for_p'>Nema rezultata za pretragu po naslovu: <b>$searchTitle</b></p>";
         }
     ?>
+    <script>
+        var app = angular.module('myApp', []);
 
+        app.controller('myCtrl', function($scope) {
+            $scope.prikazi_input_unos = false;
+
+            $scope.prikazi_poruku = function() {
+                if ($scope.unos_teksta && $scope.unos_teksta.length > 0) {
+                    $scope.prikazi_input_unos = true;
+                } else {
+                    $scope.prikazi_input_unos = false;
+                }
+            };
+        });
+</script>
 </body>
 </html>

@@ -97,7 +97,7 @@ $comments_query = mysqli_query($conn, "SELECT id, poster, comment, created_at FR
     <?php
     if ($isAuthor || $isAdmin) {
         echo '<form method="post" action="">';
-        echo '<input type="submit" name="edit_post" value="Uredi posting" class="show_a">';
+        echo '<input type="submit" name="edit_post" value="Uredi objavu" class="show_a">';
         echo '</form>';
     }
     ?>
@@ -106,7 +106,7 @@ $comments_query = mysqli_query($conn, "SELECT id, poster, comment, created_at FR
     <?php
     if ($isAuthor || $isAdmin) {
         echo '<form method="post" action="">';
-        echo '<input type="submit" name="delete_post" value="Obriši posting" class="show_a" style="color: red;">';
+        echo '<input type="submit" name="delete_post" value="Obriši objavu" class="show_a" style="color: red;">';
         echo '</form>';
     }
     ?><br><br>

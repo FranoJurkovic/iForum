@@ -50,9 +50,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <!-- Unutar forme ispisivanje se radi s htmlspecialchars zbog sigurnosti,
     ako netko pokuša pisati HTML elemente, da se tretiraju kao običan string -->
     <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="POST">
-        <input type="text" name="username" placeholder="Korisničko ime" class="reg_i"> <br>
-        <input type="text" name="email" placeholder="E-mail" class="reg_i"> <br>
-        <input type="password" name="password" placeholder="Lozinka" class="reg_i"> <br><br>
+        <input type="text" name="username" placeholder="Korisničko ime" class="reg_i" autocomplete="off"> <br>
+        <input type="text" name="email" placeholder="E-mail" class="reg_i" autocomplete="off"> <br>
+        <input type="password" name="password" placeholder="Lozinka" class="reg_i" autocomplete="off"> <br><br>
         <input type="submit" value="Registriraj se" class="reg_tipka">
     </form>
     <br>

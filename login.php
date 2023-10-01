@@ -49,8 +49,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <p style="color: red;"><?php echo $errors; ?></p>
 
     <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST">
-        <input type="text" name="username" placeholder="Unesite korisničko ime" class="prijava_i"><br>
-        <input type="password" name="password" placeholder="Unesite lozinku" class="prijava_i"><br><br>
+        <input type="text" name="username" placeholder="Unesite korisničko ime" class="prijava_i" autocomplete="off"><br>
+        <input type="password" name="password" placeholder="Unesite lozinku" class="prijava_i" autocomplete="off"><br><br>
         <input type="submit" value="Prijava" class="pri_tipka">
     </form>
     <br>

@@ -76,12 +76,11 @@
     <!--Unutar forme ispisivanje se radi s htmlspecialchars zbog sigurnosti 
     ako netko pokuša pisati html elemente da se tretiraju kao običan string-->
     <form action=<?php echo htmlspecialchars($_SERVER['PHP_SELF'])?> method="POST">
-        <div ng-app="">
-            <input type="text" name="title" placeholder="Naslov" class="cre_i" ng-model="name"> <br>
-            <p style="color:white;">{{name}}</p>
-            <textarea name="desc" rows="4" cols="50" placeholder="Sadržaj teme.." class="cre_area"></textarea><br><br>
-            <input type="submit" class="cre_tipka">
-        </div>
+        <input type="text" name="title" placeholder="Naslov" class="cre_i" id="unos"> <br>
+        <p style="color:white;" id="ispis"></p>
+        <textarea name="desc" rows="4" cols="50" placeholder="Sadržaj teme.." class="cre_area"></textarea><br><br>
+        <input type="submit" class="cre_tipka" value="Objavi">
     </form>
+    <script src="main.js"></script>
 </body>
 </html>

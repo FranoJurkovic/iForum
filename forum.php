@@ -43,9 +43,7 @@ function isAdmin() {
     <title>iForum</title>
     <!--Povezivanje s css-om-->
     <link rel="stylesheet" href="style.css">
-
-    <!--Script src za meni oznaku za sužene ekrane i ikonu za korisnika-->
-    <script src="https://kit.fontawesome.com/e7fff21bea.js" crossorigin="anonymous"></script>
+    
 </head>
 <body>
     <div class="header">

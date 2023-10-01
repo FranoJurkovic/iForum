@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 01, 2023 at 10:24 AM
+-- Generation Time: Oct 01, 2023 at 08:38 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -51,7 +51,8 @@ INSERT INTO `comments` (`id`, `title`, `poster`, `comment`, `created_at`) VALUES
 (25, 'HTML', 'Frano Jurković 1', 'Zadnja verzija HTML je 5.', '2023-10-01 07:50:01'),
 (26, 'Node.js', 'Frano Jurković 1', 'Evo jednog primjera od node.js:\r\nconst http = require(\'node:http\');\r\n\r\nconst hostname = \'127.0.0.1\';\r\nconst port = 3000;\r\n\r\nconst server = http.createServer((req, res) => {\r\n  res.statusCode = 200;\r\n  res.setHeader(\'Content-Type\', \'text/plain\');\r\n  res.end(\'Hello, World!\\n\');\r\n});\r\n\r\nserver.listen(port, hostname, () => {\r\n  console.log(`Server running at http://${hostname}:${port}/`);\r\n});\r\nKako ispisati pozdrav svijetu preko node.js', '2023-10-01 07:56:24'),
 (30, 'HTML', 'Ivan', 'html Označava početak i kraj HTML dokumenta, pa se tako početna oznaka nalazi na početku, a završna na kraju dokumenta.', '2023-10-01 08:06:52'),
-(31, 'ads', 'Ivan', 'adnaifpwafibwiapf', '2023-10-01 08:22:59');
+(31, 'ads', 'Ivan', 'adnaifpwafibwiapf', '2023-10-01 08:22:59'),
+(32, 'ads', 'fran', 'idbaiwdbwaibdawoi', '2023-10-01 18:12:10');
 
 -- --------------------------------------------------------
 
@@ -71,8 +72,7 @@ CREATE TABLE `posting` (
 
 INSERT INTO `posting` (`poster`, `title`, `post_desc`) VALUES
 ('Frano Jurković 1', 'HTML', 'HTML je kratica za HyperText Markup Language, što znači prezentacijski jezik za izradu web stranica. Hipertekst dokument stvara se pomoću HTML jezika. HTML jezikom oblikuje se sadržaj i stvaraju se hiperveze hipertekst dokumenta.'),
-('fran', 'Node.js', 'Prevedeno s engleskog jezika-Node.js je višeplatformsko serversko okruženje otvorenog koda koje može raditi na Windows, Linux, Unix, macOS i više. Node.js je back-end JavaScript runtime okruženje, radi na V8 JavaScript motoru i izvršava JavaScript kod izvan web pretraživača.'),
-('Ivan', 'ads', 'aadfawofnwafwapfnwapfnwpiaw');
+('fran', 'Node.js', 'Prevedeno s engleskog jezika-Node.js je višeplatformsko serversko okruženje otvorenog koda koje može raditi na Windows, Linux, Unix, macOS i više. Node.js je back-end JavaScript runtime okruženje, radi na V8 JavaScript motoru i izvršava JavaScript kod izvan web pretraživača.');
 
 -- --------------------------------------------------------
 
@@ -121,7 +121,7 @@ ALTER TABLE `register`
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `register`
