@@ -89,7 +89,7 @@ body {
     border-radius: 8px;
     color: white;
     font-size: 16px;
-    width: auto; /* Postavite širinu na "auto" kako bi se prilagodila sadržaju */
+    width: auto; /* Širina je na "auto" kako bi se prilagodila sadržaju */
 }
 
 .cre_area, .show_area {

@@ -49,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["edit_post_submit"])) {
     $newTitle = mysqli_real_escape_string($conn, $_POST["new_title"]);
     $newDesc = mysqli_real_escape_string($conn, $_POST["new_desc"]);
 
-    // Ažuriraj postojeći post u bazi podataka
+    // Ažuriranje postojeći post u bazi podataka
     $update_query = "UPDATE posting SET title='$newTitle', post_desc='$newDesc' WHERE title='" . mysqli_real_escape_string($conn, $title) . "';";
     mysqli_query($conn, $update_query);
 
@@ -73,7 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["edit_post_submit"])) {
 
     <?php
     if ($isAuthor) {
-        // Prikaži formu za uređivanje ako je korisnik autor posta
+        // Prikazuje formu za uređivanje ako je korisnik autor posta
         echo '<form method="post" action="">';
         echo '<input type="text" ng-model="name" class="cre_i" id="new_title" name="new_title" value="' . htmlspecialchars($data['title']) . '" required><br>';
         echo '<textarea id="new_desc" class="cre_a" name="new_desc" rows="8" cols="80" required>' . htmlspecialchars($data['post_desc']) . '</textarea><br>';

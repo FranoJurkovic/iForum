@@ -63,7 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["comment"])) {
 
     // Provjeri je li komentar prazan
     if (!empty($comment)) {
-        // Dodaj komentar u bazu podataka
+        // Dodaje komentar u bazu podataka
         $comment = mysqli_real_escape_string($conn, $comment); // Zaštita od SQL injection
         $insert_query = "INSERT INTO comments (title, poster, comment) VALUES ('$title', '$poster', '$comment')";
         mysqli_query($conn, $insert_query);

@@ -77,7 +77,7 @@ function isAdmin() {
             . htmlspecialchars($data["poster"]) . "</sub></b><br><br>"
             . "<span style='color:white;'>" . htmlspecialchars($data["post_desc"]) . "</span><br><br>";
 
-            // Dodaj opciju za brisanje posta ako je korisnik admin
+            // Dodaje opciju za brisanje posta ako je korisnik admin
             if (isAdmin()) {
                 echo '<form method="post" action="delete_post.php">';
                 echo '<input type="hidden" name="title" value="' . htmlspecialchars($data['title']) . '">';

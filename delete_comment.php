@@ -14,9 +14,7 @@ if (is_null($_SESSION["username"])) {
 if (isset($_GET["id"])) {
     $comment_id = $_GET["id"];
 
-    // Ovdje možete provjeriti je li korisnik autor komentara ili ima druga ovlaštenja za brisanje
-
-    // Izbriši komentar iz baze podataka
+    // Izbriše komentar iz baze podataka
     mysqli_query($conn, "DELETE FROM comments WHERE id='$comment_id';");
 
     // Nakon brisanja, preusmjeri korisnika natrag na stranicu show_content.php
