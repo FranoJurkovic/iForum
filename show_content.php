@@ -89,7 +89,7 @@ $comments_query = mysqli_query($conn, "SELECT id, poster, comment, created_at FR
 <body>
     <a href="forum.php" class="show_a">Natrag</a>
 
-    <h1><?php echo $data["title"]; ?></h1>
+    <h1 style="color: white;"><?php echo $data["title"]; ?></h1>
     <sup class="show_sup">Kreirao: <?php echo $data["poster"]; ?></sup><br><hr>
     <p class="show_p"><?php echo $data["post_desc"]; ?></p>
 
@@ -124,7 +124,7 @@ $comments_query = mysqli_query($conn, "SELECT id, poster, comment, created_at FR
     <!-- Ispis postojećih komentara -->
     <?php
     while ($comment_data = mysqli_fetch_assoc($comments_query)) {
-        echo "<div class='comment'>";
+        echo "<div class='comment' style='color: white;'>";
         echo "<b>" . $comment_data["poster"] . ":</b> " . $comment_data["comment"];
 
         // Gumb za brisanje komentara (samo autor komentara ili admin)

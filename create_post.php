@@ -66,7 +66,7 @@
 
     <!--Mogućnost za vraćanje nazad preko poveznice-->
     <a href="forum.php" class="cre_a">Natrag</a>
-    <h1>Kreiraj novu objavu</h1>
+    <h1 style="color: white;">Kreiraj novu objavu</h1>
 
     <!--Ukoliko postoji greška ispisat će se u paragrafu-->
     <p style="color:red;"><?php echo $errors; ?></p>

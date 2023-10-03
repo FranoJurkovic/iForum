@@ -59,12 +59,12 @@ if (isset($_GET['searchTitle'])) {
     <hr>
     <br>
 
-    <h1>Pretraživanje naslova</h1>
+    <h1 style='color: white;'>Pretraživanje naslova</h1>
 
     <form method="get" action="">
         <div ng-app="myApp" ng-controller="myCtrl">
-            <label for="searchTitle">Unesite naslov za pretragu:</label>
-            <input type="text" id="searchTitle" name="searchTitle" class="for_i" ng-model="unos_teksta" ng-keyup="prikazi_poruku()">
+            <label for="searchTitle" style='color: white;'>Unesite naslov za pretragu:</label><br><br>
+            <input type="text" id="searchTitle" name="searchTitle" class="for_i" ng-model="unos_teksta" ng-keyup="prikazi_poruku()" autocomplete="off">
             <button type="submit" class="for_b">Pretraži</button>
             <p style="color:white;" ng-show="prikazi_input_unos">Unijeli ste: {{unos_teksta}}</p>
         </div>
@@ -73,16 +73,16 @@ if (isset($_GET['searchTitle'])) {
     <?php
         // Prikaz rezultata pretrage
         if (!empty($searchResults)) {
-            echo '<h2>Rezultati pretrage</h2>';
+            echo '<h2 style="color: white;">Rezultati pretrage</h2>';
             foreach ($searchResults as $result) {
                 echo "<a class='for_a' href='show_content.php?title="
                 . $result['title'] . "'>" . $result["title"]
-                . "</a><br>" . "<br><sub><b>Kreirao "
+                . "</a><br>" . "<br><sub style='color: white;'><b>Kreirao "
                 . $result["poster"] . "</sub></b><hr><br>";
             }
         } elseif (isset($_GET['searchTitle'])) {
             // Ako nema rezultata
-            echo "<p class='for_p'>Nema rezultata za pretragu po naslovu: <b>$searchTitle</b></p>";
+            echo "<p class='for_p' style='color: white;'>Nema rezultata za pretragu po naslovu: <b>$searchTitle</b></p>";
         }
     ?>
     <script>

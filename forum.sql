@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 01, 2023 at 08:38 PM
+-- Generation Time: Oct 03, 2023 at 10:54 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -72,7 +72,8 @@ CREATE TABLE `posting` (
 
 INSERT INTO `posting` (`poster`, `title`, `post_desc`) VALUES
 ('Frano Jurković 1', 'HTML', 'HTML je kratica za HyperText Markup Language, što znači prezentacijski jezik za izradu web stranica. Hipertekst dokument stvara se pomoću HTML jezika. HTML jezikom oblikuje se sadržaj i stvaraju se hiperveze hipertekst dokumenta.'),
-('fran', 'Node.js', 'Prevedeno s engleskog jezika-Node.js je višeplatformsko serversko okruženje otvorenog koda koje može raditi na Windows, Linux, Unix, macOS i više. Node.js je back-end JavaScript runtime okruženje, radi na V8 JavaScript motoru i izvršava JavaScript kod izvan web pretraživača.');
+('fran', 'Node.js', 'Prevedeno s engleskog jezika-Node.js je višeplatformsko serversko okruženje otvorenog koda koje može raditi na Windows, Linux, Unix, macOS i više. Node.js je back-end JavaScript runtime okruženje, radi na V8 JavaScript motoru i izvršava JavaScript kod izvan web pretraživača.'),
+('ivan', 'Javascript', 'Javascript i java nije isto.');
 
 -- --------------------------------------------------------
 
@@ -95,7 +96,8 @@ CREATE TABLE `register` (
 INSERT INTO `register` (`id`, `username`, `email`, `password`, `role`) VALUES
 (1, 'Frano Jurković 1', 'frano@gmail.com', '$2y$10$jHAsa0ZcZpHu64J8qKz.Gu6l8E/pgjrP196z9sCoCUoiL/WfEli6.', 'admin'),
 (2, 'Fran', 'fran@gmail.com', '$2y$10$YRUyspmaKZVW7Xm/qc4/ju6e9Hiy1t7Hg6oVV/80CahE..SwR6pQ6', 'user'),
-(4, 'Ivan', 'ivan@gmail.com', '$2y$10$gtXR.pHUIYsrJnuDm/KB6eKgNNJAnaqxSKUSs1YoB1wJXobMlzQ6y', 'user');
+(4, 'Ivan', 'ivan@gmail.com', '$2y$10$gtXR.pHUIYsrJnuDm/KB6eKgNNJAnaqxSKUSs1YoB1wJXobMlzQ6y', 'user'),
+(5, 'Krešo', 'kreso@gmail.com', '$2y$10$n5LhqV8ESImxZcJfVavOGu5fQ/5TyCd/E9Bx/JZ6e5APUGtC2nYJC', 'admin');
 
 --
 -- Indexes for dumped tables
@@ -127,7 +129,7 @@ ALTER TABLE `comments`
 -- AUTO_INCREMENT for table `register`
 --
 ALTER TABLE `register`
-  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

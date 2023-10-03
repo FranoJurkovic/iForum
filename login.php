@@ -44,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Prijava</h1>
+    <h1 style='color: white;'>Prijava</h1>
 
     <p style="color: red;"><?php echo $errors; ?></p>
 

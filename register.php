@@ -42,7 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Registracija</h1>
+    <h1 style='color: white;'>Registracija</h1>
 
     <!-- Ako postoji greška, ispisuje se u paragrafu -->
     <p style="color:red;"><?php echo $errors; ?></p>
