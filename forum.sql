@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 03, 2023 at 10:54 AM
+-- Generation Time: Dec 22, 2023 at 10:04 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -97,7 +97,8 @@ INSERT INTO `register` (`id`, `username`, `email`, `password`, `role`) VALUES
 (1, 'Frano Jurković 1', 'frano@gmail.com', '$2y$10$jHAsa0ZcZpHu64J8qKz.Gu6l8E/pgjrP196z9sCoCUoiL/WfEli6.', 'admin'),
 (2, 'Fran', 'fran@gmail.com', '$2y$10$YRUyspmaKZVW7Xm/qc4/ju6e9Hiy1t7Hg6oVV/80CahE..SwR6pQ6', 'user'),
 (4, 'Ivan', 'ivan@gmail.com', '$2y$10$gtXR.pHUIYsrJnuDm/KB6eKgNNJAnaqxSKUSs1YoB1wJXobMlzQ6y', 'user'),
-(5, 'Krešo', 'kreso@gmail.com', '$2y$10$n5LhqV8ESImxZcJfVavOGu5fQ/5TyCd/E9Bx/JZ6e5APUGtC2nYJC', 'admin');
+(5, 'Krešo', 'kreso@gmail.com', '$2y$10$n5LhqV8ESImxZcJfVavOGu5fQ/5TyCd/E9Bx/JZ6e5APUGtC2nYJC', 'admin'),
+(6, 'Marko', 'marko@gmail.com', '$2y$10$fFslIXqFyjp806K7zHnNZe3Q.jzT4UrtGv3gqocdlB04to3uOfKr.', 'user');
 
 --
 -- Indexes for dumped tables
@@ -123,13 +124,13 @@ ALTER TABLE `register`
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `register`
 --
 ALTER TABLE `register`
-  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

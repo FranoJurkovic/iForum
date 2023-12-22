@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo "Korisnički račun kreiran";
         } else {
             // Ako nije uspješan, ispiše se poruka "Neradi"
-            echo "Neradi";
+            echo "Ne radi";
         }
     }
 }
